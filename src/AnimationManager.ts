@@ -1,10 +1,12 @@
-export class AnimationManager {
+const enum MAGIC {
+	fps = 30
+}
 
-	fps: 30;
+export class AnimationManager {
 
 	constructor() {
 		this.startStamp = new Date().getTime();
-		this.interval = window.setInterval(() => this.tick(), 1000 / this.fps);
+		this.interval = window.setInterval(() => this.tick(), 1000 / MAGIC.fps);
 	}
 
 	tick() {
