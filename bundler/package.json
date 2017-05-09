@@ -1,0 +1,10 @@
+{
+  "name": "bundler",
+  "scripts": {
+    "cbuild": "cbuild",
+    "bundle": "cbuild -d -v -p .. -o ../dist/bundle.js -C ../config-npm.js"
+  },
+  "dependencies": {
+    "cbuild": "~0.1.2"
+  }
+}
