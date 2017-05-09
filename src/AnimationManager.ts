@@ -1,8 +1,10 @@
 export class AnimationManager {
 
+	fps: 30;
+
 	constructor() {
 		this.startStamp = new Date().getTime();
-		this.interval = window.setInterval(() => this.tick(), 1000 / 25);
+		this.interval = window.setInterval(() => this.tick(), 1000 / this.fps);
 	}
 
 	tick() {
