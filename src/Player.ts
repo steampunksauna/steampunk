@@ -1,13 +1,13 @@
 import { Inventory } from './Inventory';
-import { Sprite } from './Sprite';
+import { Actor } from './Actor';
 
 export class Player {
 
 	constructor() {
-		this.sprite = new Sprite();
+		this.actor = new Actor();
 	}
 
 	inventory: Inventory;
-	sprite: Sprite;
+	actor: Actor;
 
 }
