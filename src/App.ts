@@ -1,12 +1,18 @@
-import { Sprite } from './Sprite';
+import { AnimationManager } from './AnimationManager';
+import { SceneManager } from './SceneManager';
+import { Player } from './Player';
 
 export class App {
 
 	constructor() {
-		this.player = new Sprite();
+		this.animationManager = new AnimationManager();
+		this.sceneManager = new SceneManager();
+		this.player = new Player();
 	}
 
-	player: Sprite;
+	animationManager: AnimationManager;
+	sceneManager: SceneManager;
+	player: Player;
 
 }
 
