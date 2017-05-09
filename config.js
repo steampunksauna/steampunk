@@ -3,5 +3,11 @@ System.config({
 
 	map: {
 		css: 'node_modules/systemjs-plugin-css/css.js'
+	},
+
+	packages: {
+		'dist/': {
+			defaultExtension: 'js'
+		}
 	}
 });
