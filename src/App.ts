@@ -1,3 +1,4 @@
+import { UI } from './UI';
 import { AnimationManager } from './AnimationManager';
 import { SceneManager } from './SceneManager';
 import { Player } from './Player';
@@ -10,6 +11,7 @@ export class App {
 		this.player = new Player();
 	}
 
+	ui: UI;
 	animationManager: AnimationManager;
 	sceneManager: SceneManager;
 	player: Player;
