@@ -1,13 +1,15 @@
 import { Inventory } from './Inventory';
-import { Actor } from './Actor';
+import { Actor, ActorSpec } from './Actor';
 
-export class Player {
+export interface PlayerSpec extends ActorSpec {
+}
 
-	constructor() {
-		this.actor = new Actor();
+export class Player extends Actor {
+
+	constructor(spec: PlayerSpec) {
+		super(spec);
 	}
 
 	inventory: Inventory;
-	actor: Actor;
 
 }

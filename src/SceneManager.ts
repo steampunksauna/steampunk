@@ -16,7 +16,7 @@ export class SceneManager {
 		const scene = new Scene(spec);
 
 		this.sceneList.push(scene);
-		this.sceneTbl[scene.name] = scene;
+		this.sceneTbl[scene.id] = scene;
 	}
 
 	setScene(scene: Scene | string) {
@@ -40,7 +40,7 @@ export class SceneManager {
 	}
 
 	sceneList: Scene[] = [];
-	sceneTbl: { [name: string]: Scene } = {};
+	sceneTbl: { [id: string]: Scene } = {};
 
 	diorama: HTMLDivElement;
 

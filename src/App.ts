@@ -8,10 +8,14 @@ export class App {
 	constructor() {
 		this.animationManager = new AnimationManager();
 		this.sceneManager = new SceneManager();
-		this.player = new Player();
+		this.player = new Player({
+			id: 'player',
+			sheetUrl: 'assets/player.png',
+			firstFrame: 0
+		});
 
 		this.sceneManager.createScene({
-			name: 'init',
+			id: 'init',
 			layers: [
 				{
 					url: 'assets/bg.jpg',

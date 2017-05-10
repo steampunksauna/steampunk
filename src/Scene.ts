@@ -5,14 +5,14 @@ import { Thing } from './Thing';
 import * as Promise from 'bluebird';
 
 export interface SceneSpec {
-	name: string;
+	id: string;
 	layers: LayerSpec[];
 }
 
 export class Scene {
 
 	constructor(spec: SceneSpec) {
-		this.name = spec.name;
+		this.id = spec.id;
 
 		for(let layerSpec of spec.layers) {
 			this.layerList.push(new Layer(layerSpec));
@@ -40,7 +40,7 @@ export class Scene {
 		}
 	}
 
-	name: string;
+	id: string;
 	state = LoadState.INIT;
 
 	loaded: Promise<any>;

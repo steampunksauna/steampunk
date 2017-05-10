@@ -1,3 +1,8 @@
 .diorama-layer {
+	position: absolute;
 	width: 100%;
+}
+
+.actor {
+	position: absolute;
 }
