@@ -1,4 +1,8 @@
-const enum MAGIC {
+import * as Promise from 'bluebird';
+
+import { Animation } from './Animation';
+
+const enum Magic {
 	fps = 30
 }
 
@@ -6,16 +10,33 @@ export class AnimationManager {
 
 	constructor() {
 		this.startStamp = new Date().getTime();
-		this.interval = window.setInterval(() => this.tick(), 1000 / MAGIC.fps);
+		this.interval = window.setInterval(() => this.tick(), 1000 / Magic.fps / 2);
 	}
 
 	tick() {
 		const stamp = new Date().getTime();
+		const frame = Math.round((stamp - this.startStamp) / Magic.fps);
 
-		console.log(stamp - this.startStamp);
+		if(frame == this.frame) return;
+
+		this.frame = frame;
+
+		for(let animation of this.animationList) {
+			animation.step(frame, stamp);
+		}
+	}
+
+	animate(animation: Animation) {
+		return(new Promise((resolve, reject) => {
+			this.animationList.push(animation);
+			animation.start(this.frame, new Date().getTime());
+		}));
 	}
 
 	interval: number;
 	startStamp: number;
+	frame: number;
+
+	animationList: Animation[] = [];
 
 }
