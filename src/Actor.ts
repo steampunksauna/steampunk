@@ -5,9 +5,6 @@ import { Sprite } from './Sprite';
 
 export interface DummyConstructor extends Bluebird<any> {
 	new<T>(): Bluebird<T>;
-	all: any;
-	race: any;
-	// Add anything else you may need here.
 }
 
 declare global {
@@ -37,6 +34,17 @@ export class Actor {
 		this.sprite.image.classList.add('actor');
 		this.sprite.setSheet(this.sheet);
 		this.sprite.setFrame(spec.firstFrame);
+	}
+
+	moveTo(x: number, y: number) {
+		this.sprite.image.style.left = (x / 1920 * 100) + '%';
+		this.sprite.image.style.top = (y / 1080 * 100) + '%';
+	}
+
+	async rotate(angle: number) {
+		const prefixList = 'webkit moz ms o'.split(' ');
+
+		this.sprite.image.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
 	}
 
 	async walkTo(x: number, y: number) {

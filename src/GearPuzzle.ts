@@ -1,9 +1,9 @@
-import { SceneManager } from './SceneManager';
+import { Cast } from './Scene';
 import { Actor } from './Actor';
 
 export class GearPuzzle {
 
-  gears: Actor[];
+  gears: Cast[];
 
   constructor() {
     this.gears = [

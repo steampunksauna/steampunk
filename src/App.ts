@@ -54,7 +54,7 @@ export class App {
 				depth: 100
 			}],
 			things: [],
-			actors: this.gearpuzzle.getGears(),
+			actors: this.gearpuzzle.getGears()
 		});
 
 		this.sceneManager.setScene('gearpuzzle');
@@ -66,6 +66,7 @@ export class App {
 	animationManager: AnimationManager;
 	sceneManager: SceneManager;
 	player: Player;
+	gearpuzzle: GearPuzzle;
 
 }
 
