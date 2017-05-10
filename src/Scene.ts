@@ -7,6 +7,8 @@ import * as Promise from 'bluebird';
 
 export interface Cast {
 	actor: Actor,
+	x: number;
+	y: number;
 	layer: string
 }
 
@@ -58,6 +60,8 @@ export class Scene {
 
 		for(let cast of this.actorList) {
 			diorama.appendChild(cast.actor.sprite.image);
+			cast.actor.sprite.image.style.left = (cast.x / 1920 * 100) + '%';
+			cast.actor.sprite.image.style.top = (cast.y / 1080 * 100) + '%';
 			cast.actor.sprite.image.style.zIndex = '' + this.layerTbl[cast.layer].depth;
 		}
 	}
