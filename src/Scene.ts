@@ -1,3 +1,4 @@
+import { LoadState } from './Loader';
 import { Layer, LayerSpec } from './Layer';
 import { Thing } from './Thing';
 
@@ -6,12 +7,6 @@ import * as Promise from 'bluebird';
 export interface SceneSpec {
 	name: string;
 	layers: LayerSpec[];
-}
-
-export const enum SceneState {
-	INIT,
-	LOADING,
-	READY
 }
 
 export class Scene {
@@ -24,15 +19,15 @@ export class Scene {
 		}
 	}
 
-	init() {
-		if(this.state == SceneState.INIT) {
-			this.state = SceneState.LOADING;
+	load() {
+		if(this.state == LoadState.INIT) {
+			this.state = LoadState.LOADING;
 
 			this.loaded = Promise.map(
 				this.layerList,
-				(layer: Layer) => layer.init()
+				(layer: Layer) => layer.load()
 			).then(() => {
-				this.state = SceneState.READY;
+				this.state = LoadState.READY;
 			});
 		}
 
@@ -41,12 +36,12 @@ export class Scene {
 
 	draw(diorama: HTMLDivElement) {
 		for(let layer of this.layerList) {
-			diorama.appendChild(layer.image);
+			diorama.appendChild(layer.pic.image);
 		}
 	}
 
 	name: string;
-	state = SceneState.INIT;
+	state = LoadState.INIT;
 
 	loaded: Promise<any>;
 

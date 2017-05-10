@@ -25,7 +25,7 @@ export class SceneManager {
 		}
 
 		return(
-			scene.init().then(() => {
+			scene.load().then(() => {
 				const diorama = this.diorama;
 
 				if(typeof(scene) == 'string') return; // Impossible...

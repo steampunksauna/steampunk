@@ -1,55 +1,36 @@
 import * as Promise from 'bluebird';
 
+import { Pic } from './Pic';
+
 /** Scene background layer. */
 
 export interface LayerSpec {
-	url: string;
+	url?: string;
 	depth: number;
 }
 
 export class Layer {
 
-	constructor(spec?: LayerSpec) {
-		const image = document.createElement('img');
+	constructor(spec: LayerSpec) {
+		this.url = spec.url;
+		this.depth = spec.depth;
 
-		image.className = 'diorama-layer';
-
-		image.addEventListener('load', (e: Event) => {
-			this.width = image.width;
-			this.height = image.height;
-
-			this.onload(this);
-		});
-
-		image.addEventListener('error', (e: ErrorEvent) => {
-			this.onerror(e.error);
-		});
-
-		this.image = image;
-		this.spec = spec;
+		this.pic = new Pic();
+		this.pic.image.className = 'diorama-layer';
 	}
 
-	init() {
-		return(this.load(this.spec!.url));
-	}
-
-	load(url: string) {
-		return(new Promise((resolve, reject) => {
-			this.url = url;
-			this.image.src = url;
-			this.onload = resolve;
-			this.onerror = reject;
+	load(url?: string) {
+		return(this.pic.load(url || this.url).then((pic: Pic) => {
+			this.width = pic.image.width;
+			this.height = pic.image.height;
+			return(this);
 		}));
 	}
 
-	private onload: (layer: Layer) => void;
-	private onerror: (reason: any) => void;
-
-	spec?: LayerSpec;
-	image: HTMLImageElement;
+	pic: Pic;
 
 	/** Image file URL. */
-	url: string;
+	url?: string;
 	width: number;
 	height: number;
 
