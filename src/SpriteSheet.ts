@@ -14,8 +14,8 @@ export class SpriteSheet {
 			// TODO: What if the picture contains multiple sheets
 			// with sprites of different sizes?
 			// Need to specify sheet size and offset.
-			this.width = pic.image.width;
-			this.height = pic.image.height;
+			this.cellWidth = pic.width;
+			this.cellHeight = pic.height;
 			return(this);
 		}));
 	}
@@ -26,9 +26,9 @@ export class SpriteSheet {
 	/** Image file URL. */
 	url: string;
 	/** Source picture pixel width, should be a multiple of cols. */
-	width: number;
+	cellWidth: number;
 	/** Source picture pixel height, should be a multiple of rows. */
-	height: number;
+	cellHeight: number;
 
 	/** Pixels from picture left edge to first frame. */
 	offsetX = 0;

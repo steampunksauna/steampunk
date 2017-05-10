@@ -18,8 +18,25 @@ export class App {
 			id: 'init',
 			layers: [
 				{
-					url: 'assets/bg.jpg',
+					url: 'assets/konehuone2.png',
+					id: 'background',
 					depth: 100
+				},
+				{
+					id: 'walkway',
+					depth: 200
+				},
+				{
+					url: 'assets/konehuone.png',
+					id: 'desk',
+					depth: 300
+				}
+			],
+			things: [],
+			actors: [
+				{
+					actor: this.player,
+					layer: 'walkway'
 				}
 			]
 		});

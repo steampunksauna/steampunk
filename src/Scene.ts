@@ -1,12 +1,20 @@
 import { LoadState } from './Loader';
 import { Layer, LayerSpec } from './Layer';
-import { Thing } from './Thing';
+import { Thing, ThingSpec } from './Thing';
+import { Actor } from './Actor';
 
 import * as Promise from 'bluebird';
+
+export interface Cast {
+	actor: Actor,
+	layer: string
+}
 
 export interface SceneSpec {
 	id: string;
 	layers: LayerSpec[];
+	things: ThingSpec[];
+	actors: Cast[];
 }
 
 export class Scene {
@@ -15,8 +23,13 @@ export class Scene {
 		this.id = spec.id;
 
 		for(let layerSpec of spec.layers) {
-			this.layerList.push(new Layer(layerSpec));
+			const layer = new Layer(layerSpec);
+
+			this.layerList.push(layer);
+			if(layer.id) this.layerTbl[layer.id] = layer;
 		}
+
+		this.actorList = spec.actors;
 	}
 
 	load() {
@@ -38,6 +51,11 @@ export class Scene {
 		for(let layer of this.layerList) {
 			diorama.appendChild(layer.pic.image);
 		}
+
+		for(let cast of this.actorList) {
+			diorama.appendChild(cast.actor.sprite.image);
+			cast.actor.sprite.image.style.zIndex = '' + this.layerTbl[cast.layer].depth;
+		}
 	}
 
 	id: string;
@@ -46,6 +64,10 @@ export class Scene {
 	loaded: Promise<any>;
 
 	layerList: Layer[] = [];
+	layerTbl: { [id: string]: Layer } = {};
+
 	thingList: Thing[] = [];
+
+	actorList: Cast[] = [];
 
 }

@@ -5,11 +5,14 @@ import { LoadState } from './Loader';
 export class Pic {
 
 	constructor() {
+		// TODO: Add a containing div!
 		const image = document.createElement('img');
 
 		image.addEventListener('load', (e: Event) => {
 			this.state = LoadState.READY;
-			this.onload(this)
+			this.width = this.image.width;
+			this.height = this.image.height;
+			this.onload(this);
 		});
 
 		image.addEventListener('error', (e: ErrorEvent) => {
@@ -28,7 +31,7 @@ export class Pic {
 		}
 
 		this.loaded = new Promise<Pic>((resolve, reject) => {
-			if(!url) return(resolve());
+			if(!url) return(resolve(this));
 
 			this.onload = resolve;
 			this.onerror = reject;
@@ -45,5 +48,8 @@ export class Pic {
 	image: HTMLImageElement;
 	state = LoadState.INIT;
 	loaded: Promise<Pic>;
+
+	width: number;
+	height: number;
 
 }

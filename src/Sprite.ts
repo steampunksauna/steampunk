@@ -5,14 +5,16 @@ export class Sprite {
 	constructor() {
 		this.image = document.createElement('img');
 		this.image.classList.add('sprite');
-		document.body.appendChild(this.image);
 	}
 
 	setSheet(sheet: SpriteSheet) {
 		this.sheet = sheet;
 
 		sheet.load().then((sheet: SpriteSheet) => {
+			this.width = sheet.cellWidth;
+			this.height = sheet.cellHeight;
 			this.image.src = sheet.url;
+			this.image.style.width = (this.width / 1920 * 100) + '%';
 		});
 	}
 
@@ -28,6 +30,8 @@ export class Sprite {
 	sheet: SpriteSheet;
 	x: number;
 	y: number;
+	width: number;
+	height: number;
 	image: HTMLImageElement;
 	frame: number;
 
