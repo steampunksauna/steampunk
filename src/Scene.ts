@@ -64,6 +64,7 @@ export class Scene {
 		for(let cast of this.actorList) {
 			diorama.appendChild(cast.actor.sprite.image);
 			cast.actor.moveTo(cast.x, cast.y);
+			cast.actor.setOrigin(cast.originX, cast.originY);
 			cast.actor.sprite.image.style.zIndex = '' + this.layerTbl[cast.layer].depth;
 		}
 	}

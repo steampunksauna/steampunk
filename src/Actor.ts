@@ -41,15 +41,19 @@ export class Actor {
 		this.sprite.image.style.top = (y / 1080 * 100) + '%';
 	}
 
-	async rotate(angle: number) {
-		const prefixList = 'webkit moz ms o'.split(' ');
+	setOrigin(x: number, y: number) {
+		this.sprite.image.style.transformOrigin = (x / 1920 * 100) + '% ' + (y / 1080 * 100) + '%';
+	}
 
+	async rotate(angle: number) {
 		this.sprite.image.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
 	}
 
 	async walkTo(x: number, y: number) {
-		await Promise.delay(1000);
-		console.log('Done!');
+		while(1) {
+			await Promise.delay(100);
+			this.rotate(0);
+		}
 	}
 
 	sheet: SpriteSheet;

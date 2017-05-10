@@ -40,7 +40,9 @@ export class App {
 					actor: this.player,
 					layer: 'walkway',
 					x: 0,
-					y: 0
+					y: 0,
+					originX: 200,
+					originY: 100
 				}
 			]
 		});
