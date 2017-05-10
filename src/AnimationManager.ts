@@ -10,6 +10,7 @@ export class AnimationManager {
 
 	constructor() {
 		this.startStamp = new Date().getTime();
+		// Fire timer twice per frame to reduce jitter in frame number calculation.
 		this.interval = window.setInterval(() => this.tick(), 1000 / Magic.fps / 2);
 	}
 
@@ -17,6 +18,7 @@ export class AnimationManager {
 		const stamp = new Date().getTime();
 		const frame = Math.round((stamp - this.startStamp) / Magic.fps);
 
+		// Check if frame number has changed yet.
 		if(frame == this.frame) return;
 
 		this.frame = frame;

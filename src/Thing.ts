@@ -6,9 +6,6 @@ export class Thing {
 	constructor() {
 	}
 
-	draw(scene: Scene) {
-	}
-
-	sprite: Sprite;
+	sprite?: Sprite;
 
 }

@@ -5,7 +5,11 @@ import { Pic } from './Pic';
 /** Scene background layer. */
 
 export interface LayerSpec {
+	/** Image file URL. */
 	url?: string;
+	/** Optional layer name. */
+	name?: string;
+	/** Depth for z-order and maybe parallax effect. */
 	depth: number;
 }
 
@@ -16,7 +20,7 @@ export class Layer {
 		this.depth = spec.depth;
 
 		this.pic = new Pic();
-		this.pic.image.className = 'diorama-layer';
+		this.pic.image.classList.add('diorama-layer');
 	}
 
 	load(url?: string) {
@@ -31,7 +35,11 @@ export class Layer {
 
 	/** Image file URL. */
 	url?: string;
+	/** Optional layer name. */
+	name?: string;
+	/** Width in pixels. */
 	width: number;
+	/** Height in pixels. */
 	height: number;
 
 	/** Depth for z-order and maybe parallax effect. */
