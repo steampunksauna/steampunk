@@ -1,4 +1,5 @@
 var httpServer = require('http-server');
+const port = 8080;
 
 var server = httpServer.createServer({
 	root: '.',
@@ -10,4 +11,4 @@ var server = httpServer.createServer({
 	}
 });
 
-server.listen(8080);
+server.listen(port, function() { console.log("Server listening on port", port)});
