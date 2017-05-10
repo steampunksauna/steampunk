@@ -23,6 +23,8 @@ export class Sprite {
 	}
 
 	moveTo(x: number, y: number) {
+		this.image.style.left = (x / 1920 * 100) + '%';
+		this.image.style.top = (y / 1080 * 100) + '%';
 		this.x = x;
 		this.y = y;
 	}

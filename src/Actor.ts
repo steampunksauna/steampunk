@@ -38,11 +38,6 @@ export class Actor {
 		this.sprite.setFrame(spec.firstFrame);
 	}
 
-	moveTo(x: number, y: number) {
-		this.sprite.image.style.left = (x / 1920 * 100) + '%';
-		this.sprite.image.style.top = (y / 1080 * 100) + '%';
-	}
-
 	setOrigin(x: number, y: number) {
 		this.sprite.image.style.transformOrigin = (x / this.sprite.width * 100) + '% ' + (y / this.sprite.height * 100) + '%';
 	}
@@ -51,10 +46,20 @@ export class Actor {
 		this.sprite.image.style.transform = 'rotate(' + angle + 'deg)';
 	}
 
-	async walkTo(x: number, y: number) {
-		while(1) {
-			await Promise.delay(100);
-			this.rotate(angle += 10);
+	moveTo(x: number, y: number) {
+		this.sprite.moveTo(x, y);
+	}
+
+	async walkTo(toX: number, toY: number) {
+		let x = this.sprite.x;
+		let y = this.sprite.y;
+		const delta = toX - x;
+		const sign = delta < 0 ? -1 : 1;
+
+		while((toX - x) * sign > 0) {
+			await Promise.delay(33);
+			this.sprite.moveTo(x, y);
+			x += sign * 10;
 		}
 	}
 

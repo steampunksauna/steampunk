@@ -1,5 +1,5 @@
 import { UI } from './UI';
-import { AnimationManager } from './AnimationManager';
+// import { AnimationManager } from './AnimationManager';
 import { SceneManager } from './SceneManager';
 import { Player } from './Player';
 import { Actor } from './Actor';
@@ -8,7 +8,7 @@ import { GearPuzzle } from './GearPuzzle';
 export class App {
 
 	constructor() {
-		this.animationManager = new AnimationManager();
+		// this.animationManager = new AnimationManager();
 		this.sceneManager = new SceneManager();
 		this.player = new Player({
 			id: 'player',
@@ -39,10 +39,10 @@ export class App {
 				{
 					actor: this.player,
 					layer: 'walkway',
-					x: 0,
-					y: 0,
-					originX: 200,
-					originY: 100
+					x: 400,
+					y: 550,
+					originX: 60,
+					originY: 120
 				}
 			]
 		});
@@ -59,13 +59,15 @@ export class App {
 			actors: this.gearpuzzle.getGears()
 		});
 
-		this.sceneManager.setScene('gearpuzzle');
+		this.sceneManager.setScene('init');
 
-		this.player.walkTo(0, 0);
+		document.body.onclick = (e: MouseEvent) => {
+			this.player.walkTo(e.clientX / window.innerWidth * 1920, 100);
+		};
 	}
 
 	ui: UI;
-	animationManager: AnimationManager;
+	// animationManager: AnimationManager;
 	sceneManager: SceneManager;
 	player: Player;
 	gearpuzzle: GearPuzzle;
