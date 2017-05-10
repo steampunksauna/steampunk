@@ -6,3 +6,11 @@
 .actor {
 	position: absolute;
 }
+
+.thing {
+	position: absolute;
+}
+
+.thing-debug {
+	background-color: #ff00ff;
+}

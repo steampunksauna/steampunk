@@ -63,6 +63,8 @@ export class App {
 		});
 
 		this.sceneManager.setScene('gearpuzzle');
+
+		this.player.walkTo(0, 0);
 	}
 
 	ui: UI;
