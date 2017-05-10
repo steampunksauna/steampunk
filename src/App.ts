@@ -2,6 +2,7 @@ import { UI } from './UI';
 import { AnimationManager } from './AnimationManager';
 import { SceneManager } from './SceneManager';
 import { Player } from './Player';
+import { Actor } from './Actor';
 
 export class App {
 
@@ -41,7 +42,27 @@ export class App {
 			]
 		});
 
-		this.sceneManager.setScene('init');
+		this.sceneManager.createScene({
+			id: 'gearpuzzle',
+			layers: [{
+				id: 'puzzle',
+				depth: 100
+			}],
+			things: [],
+			actors: [
+				{
+					actor: new Actor({
+						id: 'gear_small',
+						sheetUrl: 'assets/gear_small.png',
+						firstFrame: 0
+					}
+					),
+					layer: 'puzzle'
+				}
+			]
+		});
+
+		this.sceneManager.setScene('gearpuzzle');
 	}
 
 	ui: UI;
