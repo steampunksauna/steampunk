@@ -26,6 +26,8 @@ export interface ActorSpec {
 	firstFrame: number;
 }
 
+let angle = 0;
+
 export class Actor {
 
 	constructor(spec: ActorSpec) {
@@ -42,17 +44,17 @@ export class Actor {
 	}
 
 	setOrigin(x: number, y: number) {
-		this.sprite.image.style.transformOrigin = (x / 1920 * 100) + '% ' + (y / 1080 * 100) + '%';
+		this.sprite.image.style.transformOrigin = (x / this.sprite.width * 100) + '% ' + (y / this.sprite.height * 100) + '%';
 	}
 
 	async rotate(angle: number) {
-		this.sprite.image.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+		this.sprite.image.style.transform = 'rotate(' + angle + 'deg)';
 	}
 
 	async walkTo(x: number, y: number) {
 		while(1) {
 			await Promise.delay(100);
-			this.rotate(0);
+			this.rotate(angle += 10);
 		}
 	}
 
