@@ -28,8 +28,11 @@ export class Gear {
     this.lastNonce = "";
   }
 
-  test(event:any) {
-    this.rotate(5);
+  async test(event:any) {
+    for (let r = 0; r <= 90; r++) {
+      this.rotate(1);
+      await Promise.delay(10);
+    }
   }
 
   connect(other: Gear, ratio: number, propagate = true) {
