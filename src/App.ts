@@ -12,7 +12,8 @@ export class App {
 		this.sceneManager = new SceneManager();
 		this.player = new Player({
 			id: 'player',
-			sheetUrl: 'assets/player.png',
+			sheetUrl: 'assets/animtest.png',
+			sheetFrames: 13,
 			firstFrame: 0
 		});
 
@@ -50,7 +51,7 @@ export class App {
 					actor: this.player,
 					layer: 'walkway',
 					x: 400,
-					y: 550,
+					y: 350,
 					originX: 60,
 					originY: 120,
 					onclick: (e: MouseEvent) => alert(2)
@@ -73,7 +74,7 @@ export class App {
 		this.sceneManager.setScene('init');
 
 		document.body.onclick = (e: MouseEvent) => {
-			this.player.walkTo(e.clientX / window.innerWidth * 1920, 100);
+			this.player.walkTo(e.clientX / window.innerWidth * 1920 - 60, 100);
 		};
 	}
 

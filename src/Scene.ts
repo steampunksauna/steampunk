@@ -72,11 +72,11 @@ export class Scene {
 		}
 
 		for(let cast of this.actorList) {
-			diorama.appendChild(cast.actor.sprite.image);
+			diorama.appendChild(cast.actor.sprite.div);
 			cast.actor.moveTo(cast.x, cast.y);
 			if(typeof(cast.originX) == 'number' && typeof(cast.originY) == 'number') cast.actor.setOrigin(cast.originX, cast.originY);
-			cast.actor.sprite.image.style.zIndex = '' + this.layerTbl[cast.layer].depth;
-			if(cast.onclick) cast.actor.sprite.image.onclick = cast.onclick;
+			cast.actor.sprite.div.style.zIndex = '' + this.layerTbl[cast.layer].depth;
+			if(cast.onclick) cast.actor.sprite.div.onclick = cast.onclick;
 		}
 	}
 

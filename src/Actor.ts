@@ -23,6 +23,7 @@ Promise = Bluebird as any;
 export interface ActorSpec {
 	id: string;
 	sheetUrl: string;
+	sheetFrames?: number;
 	firstFrame: number;
 	onclick?: (e: MouseEvent) => any;
 }
@@ -32,20 +33,20 @@ let angle = 0;
 export class Actor {
 
 	constructor(spec: ActorSpec) {
-		this.sheet = new SpriteSheet(spec.sheetUrl);
+		this.sheet = new SpriteSheet(spec.sheetUrl, spec.sheetFrames || 1);
 		this.sprite = new Sprite();
-		this.sprite.image.classList.add('actor');
+		this.sprite.div.classList.add('actor');
 		this.sprite.setSheet(this.sheet);
 		this.sprite.setFrame(spec.firstFrame);
-		if(spec.onclick) this.sprite.image.onclick = spec.onclick;
+		if(spec.onclick) this.sprite.div.onclick = spec.onclick;
 	}
 
 	setOrigin(x: number, y: number) {
-		this.sprite.image.style.transformOrigin = (x / this.sprite.width * 100) + '% ' + (y / this.sprite.height * 100) + '%';
+		this.sprite.div.style.transformOrigin = (x / this.sprite.width * 100) + '% ' + (y / this.sprite.height * 100) + '%';
 	}
 
 	async rotate(angle: number) {
-		this.sprite.image.style.transform = 'rotate(' + angle + 'deg)';
+		this.sprite.div.style.transform = 'rotate(' + angle + 'deg)';
 	}
 
 	moveTo(x: number, y: number) {
@@ -57,11 +58,14 @@ export class Actor {
 		let y = this.sprite.y;
 		const delta = toX - x;
 		const sign = delta < 0 ? -1 : 1;
+		let frame = 0;
 
 		while((toX - x) * sign > 0) {
 			await Promise.delay(33);
 			this.sprite.moveTo(x, y);
-			x += sign * 10;
+			this.sprite.setFrame(frame % 12 + 2);
+			x += sign * 30;
+			++frame;
 		}
 	}
 

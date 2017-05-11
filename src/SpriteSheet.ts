@@ -4,9 +4,10 @@ import { Pic } from './Pic';
 
 export class SpriteSheet {
 
-	constructor(url: string) {
+	constructor(url: string, frameCount: number) {
 		this.url = url;
 		this.pic = new Pic();
+		this.frameCount = frameCount;
 	}
 
 	load() {
@@ -14,7 +15,7 @@ export class SpriteSheet {
 			// TODO: What if the picture contains multiple sheets
 			// with sprites of different sizes?
 			// Need to specify sheet size and offset.
-			this.cellWidth = pic.width;
+			this.cellWidth = pic.width / this.frameCount;
 			this.cellHeight = pic.height;
 			return(this);
 		}));
@@ -22,6 +23,8 @@ export class SpriteSheet {
 
 	/** Source picture. */
 	pic: Pic;
+
+	frameCount: number;
 
 	/** Image file URL. */
 	url: string;
