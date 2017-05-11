@@ -6,16 +6,22 @@
 }
 
 .diorama-layer {
+	pointer-events: none;
 	position: absolute;
 	width: 100%;
 }
 
+.diorama-background {
+}
+
 .actor {
 	position: absolute;
+	pointer-events: auto;
 }
 
 .thing {
 	position: absolute;
+	pointer-events: auto;
 }
 
 .thing-debug {

@@ -34,7 +34,17 @@ export class App {
 					depth: 300
 				}
 			],
-			things: [],
+			things: [
+				{
+					id: 'door',
+					layer: 'walkway',
+					x: 100,
+					y: 200,
+					width: 300,
+					height: 50,
+					onclick: (e: MouseEvent) => alert(1)
+				}
+			],
 			actors: [
 				{
 					actor: this.player,
@@ -42,7 +52,8 @@ export class App {
 					x: 400,
 					y: 550,
 					originX: 60,
-					originY: 120
+					originY: 120,
+					onclick: (e: MouseEvent) => alert(2)
 				}
 			]
 		});

@@ -12,7 +12,8 @@ export interface Cast {
 	originX?: number;
 	originY?: number;
 	angle?: number;
-	layer: string
+	layer: string;
+	onclick?: (e: MouseEvent) => any;
 }
 
 export interface SceneSpec {
@@ -32,6 +33,13 @@ export class Scene {
 
 			this.layerList.push(layer);
 			if(layer.id) this.layerTbl[layer.id] = layer;
+		}
+
+		for(let thingSpec of spec.things) {
+			const thing = new Thing(thingSpec);
+
+			this.thingList.push(thing);
+			if(thing.id) this.thingTbl[thing.id] = thing;
 		}
 
 		this.actorList = spec.actors;
@@ -59,6 +67,8 @@ export class Scene {
 
 		for(let thing of this.thingList) {
 			diorama.appendChild(thing.div);
+			thing.moveTo(thing.x, thing.y);
+			thing.div.style.zIndex = '' + this.layerTbl[thing.layer].depth;
 		}
 
 		for(let cast of this.actorList) {
@@ -66,6 +76,7 @@ export class Scene {
 			cast.actor.moveTo(cast.x, cast.y);
 			if(typeof(cast.originX) == 'number' && typeof(cast.originY) == 'number') cast.actor.setOrigin(cast.originX, cast.originY);
 			cast.actor.sprite.image.style.zIndex = '' + this.layerTbl[cast.layer].depth;
+			if(cast.onclick) cast.actor.sprite.image.onclick = cast.onclick;
 		}
 	}
 
@@ -78,6 +89,7 @@ export class Scene {
 	layerTbl: { [id: string]: Layer } = {};
 
 	thingList: Thing[] = [];
+	thingTbl: { [id: string]: Thing } = {};
 
 	actorList: Cast[] = [];
 

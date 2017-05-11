@@ -24,6 +24,7 @@ export interface ActorSpec {
 	id: string;
 	sheetUrl: string;
 	firstFrame: number;
+	onclick?: (e: MouseEvent) => any;
 }
 
 let angle = 0;
@@ -36,6 +37,7 @@ export class Actor {
 		this.sprite.image.classList.add('actor');
 		this.sprite.setSheet(this.sheet);
 		this.sprite.setFrame(spec.firstFrame);
+		if(spec.onclick) this.sprite.image.onclick = spec.onclick;
 	}
 
 	setOrigin(x: number, y: number) {
