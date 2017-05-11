@@ -101,6 +101,14 @@ export class App {
 					width: 340,
 					height: 650,
 					onclick: (e: MouseEvent) => this.sceneManager.setScene('asemahalli1')
+				}, {
+					id: 'door',
+					layer: 'walkway',
+					x: 1475,
+					y: 350,
+					width: 400,
+					height: 550,
+					onclick: (e: MouseEvent) => this.sceneManager.setScene('gearpuzzle')
 				}
 			],
 			actors: [
