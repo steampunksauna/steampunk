@@ -321,14 +321,32 @@ export class App {
 
 		this.gearpuzzle = new GearPuzzle();
 
+		let gears = this.gearpuzzle.getCasts();
+		gears.push({
+			actor: new Actor({
+				id: 'clockface',
+				sheetUrl: 'assets/clockface_gearpuzzle.png',
+				firstFrame: 0
+			}),
+			layer: 'puzzle',
+			x: 142,
+			y: 600
+		});
 		this.sceneManager.createScene({
 			id: 'gearpuzzle',
 			layers: [{
+				url: 'assets/gearpuzzle_bg.png',
+				id: 'background',
+				depth: 100,
+			}, {
 				id: 'puzzle',
-				depth: 100
+				depth: 200,
+			}, {
+				id: 'clock',
+				depth: 250,
 			}],
 			things: [],
-			actors: this.gearpuzzle.getCasts()
+			actors: gears
 		});
 
 		this.sceneManager.setScene('asemahalli1');
