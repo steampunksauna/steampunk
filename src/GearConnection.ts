@@ -6,12 +6,14 @@ export class GearConnection {
   ratio: number;
   forwardLock: boolean;
   backwardLock: boolean;
+  inverted: boolean;
 
-  constructor(other: Gear, ratio: number, forwardLock = true, backwardLock = true) {
+  constructor(other: Gear, ratio: number, inverted = true, forwardLock = true, backwardLock = true) {
     this.other = other;
     this.ratio = ratio;
     this.forwardLock = forwardLock;
     this.backwardLock = backwardLock;
+    this.inverted = inverted;
   }
 
   getOther() {
@@ -24,9 +26,13 @@ export class GearConnection {
 
   rotate(angle: number, nonce: string) {
     if (angle > 0 && this.forwardLock) {
-      this.other.rotate(-angle * this.ratio, nonce);
+      if (this.inverted)
+        angle *= -1;
+      this.other.rotate(angle * this.ratio, nonce);
     } else if (this.backwardLock) {
-      this.other.rotate(-angle * this.ratio, nonce);
+      if (this.inverted)
+        angle *= -1;
+      this.other.rotate(angle * this.ratio, nonce);
     }
   }
 

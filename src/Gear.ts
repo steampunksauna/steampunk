@@ -35,12 +35,12 @@ export class Gear {
     }
   }
 
-  connect(other: Gear, ratio: number, propagate = true) {
-    let connection = new GearConnection(other, ratio);
+  connect(other: Gear, ratio: number, propagate = true, inverted = true) {
+    let connection = new GearConnection(other, ratio, inverted);
     this.connections.push(connection);
     if (propagate) {
-      ratio = 1 / ratio
-      other.connect(this, ratio, false);
+      ratio = 1 / ratio;
+      other.connect(this, ratio, false, inverted);
     }
   }
 

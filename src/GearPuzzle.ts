@@ -17,8 +17,8 @@ export class GearPuzzle {
       new Gear('gear_stepper_a', 100, 400, 50, 50),
       new Gear('gear_stepper_b', 200, 400, 50, 50),
     ];
-    this.gears[0].connect(this.gears[1], 0.5);
-    this.gears[1].connect(this.gears[2], 2);
+    this.gears[0].connect(this.gears[1], 0.5, true, false);
+    this.gears[1].connect(this.gears[2], 2, false);
   }
 
   getGears() {
