@@ -13,9 +13,12 @@ declare global {
 		catch(...args: any[]): any;
 	}
 
-	interface PromiseConstructor extends DummyConstructor {}
+	interface PromiseConstructor extends DummyConstructor {
+		new(...args: any[]): any;
+		resolve: any;
+	}
 
-	var Promise: Promise<any>;
+	var Promise: PromiseConstructor;
 }
 
 Promise = Bluebird as any;
@@ -36,6 +39,7 @@ export class Actor {
 		this.sheet = new SpriteSheet(spec.sheetUrl, spec.sheetFrames || 1);
 		this.sprite = new Sprite();
 		this.sprite.div.classList.add('actor');
+		this.sprite.div.classList.add(spec.id);
 		this.sprite.setSheet(this.sheet);
 		this.sprite.setFrame(spec.firstFrame);
 		if(spec.onclick) this.sprite.div.onclick = spec.onclick;
@@ -53,21 +57,46 @@ export class Actor {
 		this.sprite.moveTo(x, y);
 	}
 
+	async idle(offset: number) {
+		let frame = 0;
+		while(1) {
+			await Promise.delay(33 * 3);
+			this.sprite.setFrame(frame % this.sheet.frameCount, 0, offset);
+			++frame;
+		}
+	}
+
 	async walkTo(toX: number, toY: number) {
+		let resolve: any;
+		let reject: any;
+
+		this.ready = new Promise((res: any, rej: any) => {
+			resolve = res;
+			reject = rej;
+		});
+
 		let x = this.sprite.x;
 		let y = this.sprite.y;
 		const delta = toX - x;
 		const sign = delta < 0 ? -1 : 1;
 		let frame = 0;
+		const animId = ++this.animId;
 
-		while((toX - x) * sign > 0) {
+		this.sprite.div.style.transform = 'scaleX(' + (sign > 0 ? -1 : 1) + ')';
+
+		while(this.animId <= animId && (toX - x) * sign > 0) {
 			await Promise.delay(33);
-			this.sprite.moveTo(x, y);
-			this.sprite.setFrame(frame % 12 + 2);
-			x += sign * 30;
+			this.sprite.moveTo(x + sign * 20, y);
+			this.sprite.setFrame(frame % 11 + 1, 0, 0.03);
+			x += sign * 12;
 			++frame;
 		}
+
+		if(this.animId <= animId) resolve();
 	}
+
+	animId = 0;
+	ready = Promise.resolve(true);
 
 	sheet: SpriteSheet;
 	sprite: Sprite;

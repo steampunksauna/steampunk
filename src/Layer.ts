@@ -11,6 +11,7 @@ export interface LayerSpec {
 	id?: string;
 	/** Depth for z-order and maybe parallax effect. */
 	depth: number;
+	offset?: number;
 }
 
 export class Layer {
@@ -20,7 +21,10 @@ export class Layer {
 		this.id = spec.id;
 		this.depth = spec.depth;
 
+		this.div = document.createElement('div');
 		const pic = new Pic();
+		this.div.appendChild(pic.image);
+		pic.image.style.left = ((spec.offset || 0) / 1920 * 100) + '%';
 
 		pic.image.classList.add('diorama-layer');
 		if(this.url) pic.image.classList.add('diorama-background');
@@ -38,6 +42,7 @@ export class Layer {
 		}));
 	}
 
+	div: HTMLDivElement;
 	pic: Pic;
 
 	/** Image file URL. */

@@ -1,11 +1,13 @@
 import * as Promise from 'bluebird';
 
 import { Scene, SceneSpec } from './Scene';
+import { Player } from './Player';
 
 export class SceneManager {
 
-	constructor() {
+	constructor(player: Player) {
 		this.diorama = document.getElementById('diorama') as HTMLDivElement;
+		this.player = player;
 	}
 
 	createScene(spec: SceneSpec) {
@@ -15,13 +17,15 @@ export class SceneManager {
 		this.sceneTbl[scene.id] = scene;
 	}
 
-	setScene(scene: Scene | string) {
-		if(typeof(scene) == 'string') {
-			scene = this.sceneTbl[scene];
-		}
+	setScene(s: Scene | string) {
+		let scene: Scene;
+
+		if(typeof(s) == 'string') {
+			scene = this.sceneTbl[s];
+		} else scene = s;
 
 		return(
-			scene.load().then(() => {
+			scene.load().then(() =>Promise.delay(100)).then(() => this.player.ready).then(() => {
 				const diorama = this.diorama;
 
 				if(typeof(scene) == 'string') return; // Impossible...
@@ -30,7 +34,8 @@ export class SceneManager {
 					diorama.removeChild(node);
 				}
 
-				scene.draw(diorama);
+				scene.draw(diorama, this.prevScene && this.prevScene.id);
+				this.prevScene = scene;
 			})
 		);
 	}
@@ -39,5 +44,8 @@ export class SceneManager {
 	sceneTbl: { [id: string]: Scene } = {};
 
 	diorama: HTMLDivElement;
+	player: Player;
+
+	prevScene: Scene;
 
 }

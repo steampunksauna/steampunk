@@ -21,9 +21,9 @@ export class Sprite {
 		});
 	}
 
-	setFrame(frame: number) {
-		console.log(frame);
-		this.div.style.backgroundPositionX = (100 * frame) + '%';
+	setFrame(frame: number, offset = 0, offset2 = 0) {
+		// this.div.style.backgroundPositionX = (-(100 + offset2) * (frame + offset)) + '%';
+		this.div.style.backgroundPositionX = (-this.div.clientWidth * frame) + 'px';
 		this.frame = frame;
 	}
 

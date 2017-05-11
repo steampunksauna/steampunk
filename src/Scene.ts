@@ -13,6 +13,7 @@ export interface Cast {
 	originY?: number;
 	angle?: number;
 	layer: string;
+	altX?: { [ fromScene: string ]: number };
 	onclick?: (e: MouseEvent) => any;
 }
 
@@ -60,9 +61,9 @@ export class Scene {
 		return(this.loaded);
 	}
 
-	draw(diorama: HTMLDivElement) {
+	draw(diorama: HTMLDivElement, prevScene?: string) {
 		for(let layer of this.layerList) {
-			diorama.appendChild(layer.pic.image);
+			diorama.appendChild(layer.div);
 		}
 
 		for(let thing of this.thingList) {
@@ -73,7 +74,10 @@ export class Scene {
 
 		for(let cast of this.actorList) {
 			diorama.appendChild(cast.actor.sprite.div);
-			cast.actor.moveTo(cast.x, cast.y);
+console.log(cast);
+console.log(prevScene);
+			let x = (cast.altX && prevScene && cast.altX[prevScene]) || cast.x;
+			cast.actor.moveTo(x, cast.y);
 			if(typeof(cast.originX) == 'number' && typeof(cast.originY) == 'number') cast.actor.setOrigin(cast.originX, cast.originY);
 			cast.actor.sprite.div.style.zIndex = '' + this.layerTbl[cast.layer].depth;
 			if(cast.onclick) cast.actor.sprite.div.onclick = cast.onclick;

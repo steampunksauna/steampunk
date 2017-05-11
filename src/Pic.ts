@@ -5,7 +5,6 @@ import { LoadState } from './Loader';
 export class Pic {
 
 	constructor() {
-		// TODO: Add a containing div!
 		const image = document.createElement('img');
 
 		image.addEventListener('load', (e: Event) => {
