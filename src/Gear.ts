@@ -7,6 +7,7 @@ export class Gear {
   cast: Cast;
   angle: number;
   connections: GearConnection[];
+  lastNonce: string;
 
   constructor(id: string, x: number, y: number, originX: number, originY: number) {
     this.cast = {
@@ -24,6 +25,7 @@ export class Gear {
     };
     this.angle = 0;
     this.connections = [];
+    this.lastNonce = "";
   }
 
   test(event:any) {
@@ -48,14 +50,18 @@ export class Gear {
     this.cast.actor.rotate(angle);
   }
 
-  rotate(angle: number, propagate = true) {
+  rotate(angle: number, nonce?: string) {
+    if (undefined == nonce)
+      nonce = Math.random().toString()
+    if (this.lastNonce == nonce)
+      return;
+    else
+      this.lastNonce = nonce;
     this.angle = this.angle + angle;
     this.cast.actor.rotate(this.angle);
-    if (propagate) {
-      this.connections.forEach((connection => {
-        connection.rotate(angle);
-      }))
-    }
+    this.connections.forEach((connection => {
+        connection.rotate(angle, nonce);
+    }));
   }
 
 }

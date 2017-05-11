@@ -22,11 +22,11 @@ export class GearConnection {
     return this.ratio;
   }
 
-  rotate(angle: number) {
+  rotate(angle: number, nonce: string) {
     if (angle > 0 && this.forwardLock) {
-      this.other.rotate(-angle * this.ratio, false);
+      this.other.rotate(-angle * this.ratio, nonce);
     } else if (this.backwardLock) {
-      this.other.rotate(-angle * this.ratio, false);
+      this.other.rotate(-angle * this.ratio, nonce);
     }
   }
 
