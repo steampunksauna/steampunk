@@ -1,3 +1,10 @@
+#diorama {
+	position: relative;
+	width: 100%;
+	height: 0;
+	padding-bottom:56.25%;
+}
+
 .diorama-layer {
 	position: absolute;
 	width: 100%;

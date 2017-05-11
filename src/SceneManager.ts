@@ -5,11 +5,7 @@ import { Scene, SceneSpec } from './Scene';
 export class SceneManager {
 
 	constructor() {
-		const diorama = document.createElement('div')
-		diorama.className = 'diorama';
-
-		document.body.appendChild(diorama);
-		this.diorama = diorama;
+		this.diorama = document.getElementById('diorama') as HTMLDivElement;
 	}
 
 	createScene(spec: SceneSpec) {
