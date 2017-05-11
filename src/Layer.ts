@@ -23,6 +23,7 @@ export class Layer {
 		const pic = new Pic();
 
 		pic.image.classList.add('diorama-layer');
+		if(this.url) pic.image.classList.add('diorama-background');
 		pic.image.style.zIndex = '' + this.depth;
 
 		this.pic = pic;

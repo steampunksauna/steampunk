@@ -10,6 +10,10 @@
 	width: 100%;
 }
 
+.diorama-background {
+	pointer-events: none;
+}
+
 .actor {
 	position: absolute;
 }
