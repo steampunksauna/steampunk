@@ -1,80 +1,33 @@
 import { Cast } from './Scene';
 import { Actor } from './Actor';
+import { Gear } from './Gear';
 
 export class GearPuzzle {
 
-  gears: Cast[];
+  gears: Gear[];
 
   constructor() {
     this.gears = [
-      {
-        actor: new Actor({
-          id: 'gear_small',
-          sheetUrl: 'assets/gear_small.png',
-          firstFrame: 0
-        }),
-        layer: 'puzzle',
-        x: 100,
-        y: 100
-      }, {
-        actor: new Actor({
-          id: 'gear_big',
-          sheetUrl: 'assets/gear_big.png',
-          firstFrame: 0
-        }),
-        layer: 'puzzle',
-        x: 300,
-        y: 150
-      }, {
-        actor: new Actor({
-          id: 'gear_big_half',
-          sheetUrl: 'assets/gear_big_half.png',
-          firstFrame: 0
-        }),
-        layer: 'puzzle',
-        x: 300,
-        y: 400
-      }, {
-        actor: new Actor({
-          id: 'gear_ratchet',
-          sheetUrl: 'assets/gear_ratchet.png',
-          firstFrame: 0
-        }),
-        layer: 'puzzle',
-        x: 500,
-        y: 500
-      }, {
-        actor: new Actor({
-          id: 'pawl',
-          sheetUrl: 'assets/pawl.png',
-          firstFrame: 0
-        }),
-        layer: 'puzzle',
-        x: 500,
-        y: 500
-      }, {
-        actor: new Actor({
-          id: 'gear_stepper_a',
-          sheetUrl: 'assets/gear_stepper_a.png',
-          firstFrame: 0
-        }),
-        layer: 'puzzle',
-        x: 100,
-        y: 400
-      }, {
-        actor: new Actor({
-          id: 'gear_stepper_b',
-          sheetUrl: 'assets/gear_stepper_b.png',
-          firstFrame: 0
-        }),
-        layer: 'puzzle',
-        x: 200,
-        y: 400
-      }
+      new Gear('gear_small', 100, 100, 50, 50),
+      new Gear('gear_big', 300, 150, 50, 50),
+      new Gear('gear_big_half', 300, 400, 50, 50),
+      new Gear('gear_ratchet', 500, 500, 50, 50),
+      new Gear('pawl', 500, 500, 50, 50),
+      new Gear('gear_stepper_a', 100, 400, 50, 50),
+      new Gear('gear_stepper_b', 200, 400, 50, 50),
     ];
   }
 
   getGears() {
     return this.gears;
+  }
+
+  getCasts() {
+    let result: Cast[];
+    result = [];
+    this.gears.forEach(function (element) {
+      result.push(element.getCast());
+    });
+    return result;
   }
 }

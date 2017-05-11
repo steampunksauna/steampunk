@@ -56,7 +56,7 @@ export class App {
 				depth: 100
 			}],
 			things: [],
-			actors: this.gearpuzzle.getGears()
+			actors: this.gearpuzzle.getCasts()
 		});
 
 		this.sceneManager.setScene('init');
