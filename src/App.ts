@@ -133,7 +133,8 @@ export class App {
 					actor: engineer,
 					layer: 'desk-top',
 					x: 778,
-					y: 508
+					y: 508,
+					onclick: (e: MouseEvent) => this.player.talkTo(engineer, e)
 				},
 				{
 					actor: gear1,
@@ -389,7 +390,7 @@ export class App {
 
 		document.body.onclick = (e: MouseEvent) => {
 			this.player.idling = false;
-			this.player.walkTo(e.clientX / window.innerWidth * 1920 - 60, 100).then(() => this.player.sprite.setFrame(0));
+			this.player.walkTo(e.clientX / window.innerWidth * 1920 - 60, 100);
 		};
 
 		engineer.idle(0);

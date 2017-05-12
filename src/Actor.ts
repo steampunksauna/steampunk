@@ -96,17 +96,22 @@ export class Actor {
 			++frame;
 		}
 
-		if(this.animId <= animId) resolve();
+		if(this.animId <= animId) {
+			this.sprite.setFrame(0);
+			resolve();
+		}
 	}
 
-	async talkTo(target: Actor, event?: MouseEvent) {
+	talkTo(target: Actor, event?: MouseEvent) {
 		event!.stopPropagation();
 		event!.preventDefault();
 
-		await this.walkTo(target.sprite.x - 200, 0);
-		this.sprite.div.style.transform = 'scaleX(-1)';
+		this.walkTo(target.sprite.x - 200, 0);
+		this.ready.then(() => {
+			this.sprite.div.style.transform = 'scaleX(-1)';
 
-		this.sceneManager.showDialog();
+			this.sceneManager.showDialog();
+		});
 	}
 
 	idling = false;
