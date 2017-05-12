@@ -1,6 +1,7 @@
 import { Cast } from './Scene';
 import { Actor } from './Actor';
 import { GearConnection } from './GearConnection';
+import { GearPuzzle } from './GearPuzzle';
 
 export class Gear {
 
@@ -11,8 +12,9 @@ export class Gear {
 	positions: number[];
 	currentPositionIndex = 0;
 	degreeStep = 2;
+	parent: GearPuzzle;
 
-	constructor(id: string, x: number, y: number, originX: number, originY: number, positions?: number[], layer?: string) {
+	constructor(id: string, x: number, y: number, originX: number, originY: number, parent: GearPuzzle, positions?: number[], layer?: string) {
 		let defaultLayer = 'puzzle';
 		if (undefined != layer)
 			defaultLayer = layer;
@@ -35,6 +37,7 @@ export class Gear {
 		this.angle = 0;
 		this.connections = [];
 		this.lastNonce = "";
+		this.parent = parent;
 	}
 
 	async clickToggle(event:any) {
@@ -60,6 +63,7 @@ export class Gear {
 		this.currentPositionIndex++;
 		if (this.currentPositionIndex >= this.positions.length)
 			this.currentPositionIndex = 0;
+		this.parent.checkSolution();
 	}
 
 	connect(other: Gear, ratio: number, propagate = true, inverted = true) {
