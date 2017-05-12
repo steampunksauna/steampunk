@@ -2,6 +2,7 @@ import { Cast } from './Scene';
 import { Actor } from './Actor';
 import { GearConnection } from './GearConnection';
 import { GearPuzzle } from './GearPuzzle';
+import { audiomanager } from './AudioManager';
 
 export class Gear {
 
@@ -43,6 +44,7 @@ export class Gear {
 	async clickToggle(event:any) {
 		if (this.parent.isMoving())
 			return;
+		audiomanager.play('test');
 		this.parent.setMoving(true);
 		let distance = 0;
 		let step = this.degreeStep;

@@ -1,6 +1,7 @@
 import { Cast } from './Scene';
 import { Actor } from './Actor';
 import { Gear } from './Gear';
+import { audiomanager } from './AudioManager';
 
 export class GearPuzzle {
 
@@ -8,6 +9,7 @@ export class GearPuzzle {
 	moving = false;
 
 	constructor() {
+		audiomanager.createAudio('test', 'khatchonk');
 		let smallOffset = 56;
 		let bigOffset = 102;
 		this.gears = [
