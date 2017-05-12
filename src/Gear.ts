@@ -14,7 +14,7 @@ export class Gear {
 	degreeStep = 2;
 	parent: GearPuzzle;
 
-	constructor(id: string, x: number, y: number, originX: number, originY: number, parent: GearPuzzle, positions?: number[], initialRotation = 0, layer?: string) {
+	constructor(id: string, x: number, y: number, originX: number, originY: number, parent: GearPuzzle, initialRotation = 0, positions?: number[], layer?: string) {
 		let defaultLayer = 'puzzle';
 		if (undefined != layer)
 			defaultLayer = layer;
