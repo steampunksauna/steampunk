@@ -390,7 +390,15 @@ export class App {
 				id: 'clockhands',
 				depth: 300,
 			}],
-			things: [],
+			things: [{
+				id: 'door',
+				layer: 'clock',
+				x: 1625,
+				y: 350,
+				width: 250,
+				height: 550,
+				onclick: (e: MouseEvent) => this.sceneManager.setScene('konehuone')
+			}],
 			actors: gears
 		});
 
