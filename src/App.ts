@@ -7,6 +7,7 @@ import { GearPuzzle } from './GearPuzzle';
 import { script as sellerScript } from './actor/Seller';
 import { script as engineerScript } from './actor/Engineer';
 import { script as conductorScript } from './actor/Conductor';
+import { audiomanager } from './AudioManager';
 
 const portalWidth = 320;
 
@@ -20,6 +21,8 @@ export class App {
 			sheetFrames: 12,
 			firstFrame: 0
 		});
+		audiomanager.createAudio('footstep_left', 'footstep_left');
+		audiomanager.createAudio('footstep_right', 'footstep_right');
 
 		const npc: { [id: string]: Actor } = {
 			engineer: new Actor({

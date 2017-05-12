@@ -2,11 +2,13 @@ export class AudioManager {
 
   audioContainer: HTMLDivElement;
   sounds: {[id: string]: HTMLAudioElement};
+  soundFiles: {[id: string]: string};
   activeLoops: HTMLAudioElement[];
 
   constructor() {
     this.audioContainer = document.getElementById('audio') as HTMLDivElement;
     this.sounds = {};
+    this.soundFiles = {};
     this.activeLoops = [];
   }
 
@@ -20,8 +22,16 @@ export class AudioManager {
     oggSource.src = 'sounds/' + file + '.ogg';
     audio.appendChild(mp3Source);
     audio.appendChild(oggSource);
+    audio.id = id;
     this.audioContainer.appendChild(audio);
     this.sounds[id] = audio;
+    this.soundFiles[id] = file;
+  }
+
+  removeAudio(id: string) {
+    let elem = document.getElementById(id)!;
+    this.audioContainer.removeChild(elem);
+    delete this.sounds[id];
   }
 
   play(id: string) {
@@ -42,6 +52,8 @@ export class AudioManager {
     this.activeLoops.forEach((sound) => {
       sound.loop = false;
       sound.pause();
+      this.removeAudio(sound.id);
+      this.createAudio(sound.id, this.soundFiles[sound.id]);
     });
     this.activeLoops = [];
   }
