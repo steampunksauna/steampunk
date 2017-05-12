@@ -5,6 +5,7 @@ import { Gear } from './Gear';
 export class GearPuzzle {
 
 	gears: Gear[];
+	moving = false;
 
 	constructor() {
 		this.gears = [
@@ -46,4 +47,7 @@ export class GearPuzzle {
 			minutehand += 360;
 		console.log("Combination:", hourhand, minutehand);
 	}
+
+	isMoving() { return this.moving; }
+	setMoving(moving: boolean) { this.moving = moving; }
 }

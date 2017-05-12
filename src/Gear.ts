@@ -41,6 +41,9 @@ export class Gear {
 	}
 
 	async clickToggle(event:any) {
+		if (this.parent.isMoving())
+			return;
+		this.parent.setMoving(true);
 		let distance = 0;
 		let step = this.degreeStep;
 		if (this.currentPositionIndex < this.positions.length - 1) {
@@ -63,6 +66,7 @@ export class Gear {
 		this.currentPositionIndex++;
 		if (this.currentPositionIndex >= this.positions.length)
 			this.currentPositionIndex = 0;
+		this.parent.setMoving(false);
 		this.parent.checkSolution();
 	}
 
