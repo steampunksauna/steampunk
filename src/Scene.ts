@@ -74,8 +74,6 @@ export class Scene {
 
 		for(let cast of this.actorList) {
 			diorama.appendChild(cast.actor.sprite.div);
-console.log(cast);
-console.log(prevScene);
 			let x = (cast.altX && prevScene && cast.altX[prevScene]) || cast.x;
 			cast.actor.moveTo(x, cast.y);
 			if(typeof(cast.originX) == 'number' && typeof(cast.originY) == 'number') cast.actor.setOrigin(cast.originX, cast.originY);

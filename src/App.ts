@@ -46,6 +46,13 @@ export class App {
 			firstFrame: 0
 		});
 
+		const conductor = new Actor({
+			id: 'conductor',
+			sheetUrl: 'assets/conductor2.png',
+			sheetFrames: 12,
+			firstFrame: 0
+		});
+
 		const gear1 = new Actor({
 			id: 'gear1',
 			sheetUrl: 'assets/ratas.png',
@@ -90,6 +97,10 @@ export class App {
 				{
 					id: 'desk-top',
 					depth: 400
+				},
+				{
+					id: 'dialog',
+					depth: 500
 				}
 			],
 			things: [
@@ -122,7 +133,8 @@ export class App {
 					actor: engineer,
 					layer: 'desk-top',
 					x: 778,
-					y: 508
+					y: 508,
+					onclick: (e: MouseEvent) => this.player.talkTo(engineer, e)
 				},
 				{
 					actor: gear1,
@@ -158,6 +170,10 @@ export class App {
 				{
 					id: 'walkway',
 					depth: 300
+				},
+				{
+					id: 'dialog',
+					depth: 400
 				}
 			],
 			things: [
@@ -203,8 +219,8 @@ export class App {
 					actor: seller,
 					layer: 'counter',
 					x: 1040,
-					y: 600
-					onclick: (e: MouseEvent) => alert(1)
+					y: 600,
+					onclick: (e: MouseEvent) => this.player.talkTo(seller, e)
 				}
 			]
 		});
@@ -219,8 +235,16 @@ export class App {
 					offset: -1600
 				},
 				{
-					id: 'walkway',
+					id: 'behind',
 					depth: 200
+				},
+				{
+					id: 'walkway',
+					depth: 300
+				},
+				{
+					id: 'dialog',
+					depth: 400
 				}
 			],
 			things: [
@@ -252,6 +276,12 @@ export class App {
 						asemahalli3: 1400
 					},
 					y: 650 - 80
+				},
+				{
+					actor: conductor,
+					layer: 'behind',
+					x: 1200,
+					y: 560
 				}
 			]
 		});
@@ -272,6 +302,10 @@ export class App {
 				{
 					id: 'walkway',
 					depth: 300
+				},
+				{
+					id: 'dialog',
+					depth: 400
 				}
 			],
 			things: [
@@ -352,16 +386,19 @@ export class App {
 			actors: gears
 		});
 
-		this.sceneManager.setScene('gearpuzzle');
+		this.sceneManager.setScene('asemahalli1');
 
 		document.body.onclick = (e: MouseEvent) => {
+			this.player.idling = false;
 			this.player.walkTo(e.clientX / window.innerWidth * 1920 - 60, 100);
 		};
 
-		engineer.idle(0.01);
-		seller.idle(0.03);
-		okru.idle(0.03);
-		strazu.idle(0.03);
+		engineer.idle(0);
+		seller.idle(0);
+		okru.idle(0);
+		strazu.idle(0);
+		conductor.idle(0);
+		conductor.sprite.div.style.transform = 'scaleX(-1)';
 	}
 
 	ui: UI;

@@ -42,9 +42,16 @@ html, body, #map {
 	cursor: pointer;
 }
 
+.dialog {
+	position: absolute;
+	pointer-events: auto;
+}
+
+/*
 .thing-debug {
 	background-color: rgba(255, 0, 255, 0.125);
 }
+*/
 
 @keyframes spin1 {
 	from { transform: rotate(0deg); }
