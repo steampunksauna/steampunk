@@ -41,6 +41,7 @@ export class AudioManager {
   clearLoops() {
     this.activeLoops.forEach((sound) => {
       sound.loop = false;
+      sound.pause();
     });
     this.activeLoops = [];
   }
