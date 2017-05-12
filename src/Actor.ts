@@ -26,6 +26,8 @@ Promise = Bluebird as any;
 
 export interface ActorSpec {
 	id: string;
+	name?: string;
+	script?: any;
 	sheetUrl: string;
 	sheetFrames?: number;
 	firstFrame: number;
@@ -37,13 +39,13 @@ let angle = 0;
 export class Actor {
 
 	constructor(spec: ActorSpec) {
+		this.spec = spec;
 		this.sheet = new SpriteSheet(spec.sheetUrl, spec.sheetFrames || 1);
 		this.sprite = new Sprite();
 		this.sprite.div.classList.add('actor');
 		this.sprite.div.classList.add(spec.id);
 		this.sprite.setSheet(this.sheet);
 		this.sprite.setFrame(spec.firstFrame);
-		if(spec.onclick) this.sprite.div.onclick = spec.onclick;
 	}
 
 	setOrigin(x: number, y: number) {
@@ -89,6 +91,7 @@ export class Actor {
 		this.sprite.div.style.transform = 'scaleX(' + (sign > 0 ? -1 : 1) + ')';
 
 		while(this.animId <= animId && (toX - x) * sign > 0) {
+			this.sprite.div.style.width = ~~(this.sprite.width * document.body.clientWidth / 1920) + 'px';
 			await Promise.delay(33);
 			this.sprite.moveTo(x + sign * 20, y);
 			this.sprite.setFrame(frame % 11 + 1, 0, 0.03);
@@ -110,10 +113,11 @@ export class Actor {
 		this.ready.then(() => {
 			this.sprite.div.style.transform = 'scaleX(-1)';
 
-			this.sceneManager.showDialog();
+			this.sceneManager.showDialog(target.spec.script);
 		});
 	}
 
+	spec: ActorSpec;
 	idling = false;
 	animId = 0;
 	ready = Promise.resolve(true);
