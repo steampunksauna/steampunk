@@ -44,7 +44,7 @@ export class Gear {
 	async clickToggle(event:any) {
 		if (this.parent.isMoving())
 			return;
-		audiomanager.play('test');
+		audiomanager.play('gear');
 		this.parent.setMoving(true);
 		let distance = 0;
 		let step = this.degreeStep;
