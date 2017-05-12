@@ -12,14 +12,17 @@ export class Gear {
   currentPositionIndex = 0;
   degreeStep = 2;
 
-  constructor(id: string, x: number, y: number, originX: number, originY: number, positions?: number[]) {
+  constructor(id: string, x: number, y: number, originX: number, originY: number, positions?: number[], layer?: string) {
+    let defaultLayer = 'puzzle';
+    if (undefined != layer)
+      defaultLayer = layer;
     this.cast = {
       actor: new Actor({
         id: id,
         sheetUrl: 'assets/' + id + '.png',
         firstFrame: 0
       }),
-      layer: 'puzzle',
+      layer: defaultLayer,
       x: x,
       y: y,
       originX: originX,

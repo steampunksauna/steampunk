@@ -344,12 +344,15 @@ export class App {
 			}, {
 				id: 'clock',
 				depth: 250,
+			}, {
+				id: 'clockhands',
+				depth: 300,
 			}],
 			things: [],
 			actors: gears
 		});
 
-		this.sceneManager.setScene('asemahalli1');
+		this.sceneManager.setScene('gearpuzzle');
 
 		document.body.onclick = (e: MouseEvent) => {
 			this.player.walkTo(e.clientX / window.innerWidth * 1920 - 60, 100);
