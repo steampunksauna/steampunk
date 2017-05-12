@@ -1,5 +1,6 @@
 import * as Bluebird from 'bluebird';
 
+import { SceneManager } from './SceneManager';
 import { SpriteSheet } from './SpriteSheet';
 import { Sprite } from './Sprite';
 
@@ -59,7 +60,10 @@ export class Actor {
 
 	async idle(offset: number) {
 		let frame = 0;
-		while(1) {
+		this.idling = true;
+
+		while(this.idling) {
+			this.sprite.div.style.width = ~~(this.sprite.width * document.body.clientWidth / 1920) + 'px';
 			await Promise.delay(33 * 3);
 			this.sprite.setFrame(frame % this.sheet.frameCount, 0, offset);
 			++frame;
@@ -95,9 +99,21 @@ export class Actor {
 		if(this.animId <= animId) resolve();
 	}
 
+	async talkTo(target: Actor, event?: MouseEvent) {
+		event!.stopPropagation();
+		event!.preventDefault();
+
+		await this.walkTo(target.sprite.x - 200, 0);
+		this.sprite.div.style.transform = 'scaleX(-1)';
+
+		this.sceneManager.showDialog();
+	}
+
+	idling = false;
 	animId = 0;
 	ready = Promise.resolve(true);
 
+	sceneManager: SceneManager;
 	sheet: SpriteSheet;
 	sprite: Sprite;
 
