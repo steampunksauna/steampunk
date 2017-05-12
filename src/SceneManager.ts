@@ -32,8 +32,8 @@ export class SceneManager {
 		this.sceneTbl[scene.id] = scene;
 	}
 
-	showDialog() {
-		const dialog = new Dialog({});
+	showDialog(script: any) {
+		const dialog = new Dialog(script);
 		this.diorama.appendChild(dialog.sprite.div);
 		dialog.sprite.div.style.zIndex = '' + this.scene.layerTbl['dialog'].depth;
 	}
@@ -54,7 +54,7 @@ export class SceneManager {
 				if(typeof(scene) == 'string') return; // Impossible...
 
 				for(let node of Array.prototype.slice.call(diorama.children)) {
-					diorama.removeChild(node);
+					if(node.id != 'dialog-modal') diorama.removeChild(node);
 				}
 
 				scene.draw(diorama, this.prevScene && this.prevScene.id);

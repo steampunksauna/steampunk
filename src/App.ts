@@ -4,6 +4,9 @@ import { SceneManager } from './SceneManager';
 import { Player } from './Player';
 import { Actor } from './Actor';
 import { GearPuzzle } from './GearPuzzle';
+import { script as sellerScript } from './actor/Seller';
+import { script as engineerScript } from './actor/Engineer';
+import { script as conductorScript } from './actor/Conductor';
 
 const portalWidth = 320;
 
@@ -18,40 +21,44 @@ export class App {
 			firstFrame: 0
 		});
 
-		const engineer = new Actor({
-			id: 'engineer',
-			sheetUrl: 'assets/engineer.png',
-			sheetFrames: 12,
-			firstFrame: 0
-		});
-
-		const seller = new Actor({
-			id: 'seller',
-			sheetUrl: 'assets/seller.png',
-			sheetFrames: 12,
-			firstFrame: 0
-		});
-
-		const okru = new Actor({
-			id: 'okru',
-			sheetUrl: 'assets/guard2.png',
-			sheetFrames: 12,
-			firstFrame: 0
-		});
-
-		const strazu = new Actor({
-			id: 'strazu',
-			sheetUrl: 'assets/guard2.png',
-			sheetFrames: 12,
-			firstFrame: 0
-		});
-
-		const conductor = new Actor({
-			id: 'conductor',
-			sheetUrl: 'assets/conductor2.png',
-			sheetFrames: 12,
-			firstFrame: 0
-		});
+		const npc: { [id: string]: Actor } = {
+			engineer: new Actor({
+				id: 'engineer',
+				name: 'Mechanic Mirka',
+				script: engineerScript,
+				sheetUrl: 'assets/engineer.png',
+				sheetFrames: 12,
+				firstFrame: 0
+			}),
+			seller: new Actor({
+				id: 'seller',
+				name: 'Paperboy Timo',
+				script: sellerScript,
+				sheetUrl: 'assets/seller.png',
+				sheetFrames: 12,
+				firstFrame: 0
+			}),
+			conductor: new Actor({
+				id: 'conductor',
+				name: 'Conductor Provodnik',
+				script: conductorScript,
+				sheetUrl: 'assets/conductor2.png',
+				sheetFrames: 12,
+				firstFrame: 0
+			}),
+			okru: new Actor({
+				id: 'okru',
+				sheetUrl: 'assets/guard2.png',
+				sheetFrames: 12,
+				firstFrame: 0
+			}),
+			strazu: new Actor({
+				id: 'strazu',
+				sheetUrl: 'assets/guard2.png',
+				sheetFrames: 12,
+				firstFrame: 0
+			})
+		};
 
 		const gear1 = new Actor({
 			id: 'gear1',
@@ -130,11 +137,10 @@ export class App {
 					y: 550 - 80
 				},
 				{
-					actor: engineer,
+					actor: npc.engineer,
 					layer: 'desk-top',
 					x: 778,
-					y: 508,
-					onclick: (e: MouseEvent) => this.player.talkTo(engineer, e)
+					y: 508
 				},
 				{
 					actor: gear1,
@@ -216,11 +222,10 @@ export class App {
 					y: 650 - 80
 				},
 				{
-					actor: seller,
+					actor: npc.seller,
 					layer: 'counter',
 					x: 1040,
-					y: 600,
-					onclick: (e: MouseEvent) => this.player.talkTo(seller, e)
+					y: 600
 				}
 			]
 		});
@@ -278,7 +283,7 @@ export class App {
 					y: 650 - 80
 				},
 				{
-					actor: conductor,
+					actor: npc.conductor,
 					layer: 'behind',
 					x: 1200,
 					y: 560
@@ -339,13 +344,13 @@ export class App {
 					y: 650 - 80
 				},
 				{
-					actor: okru,
+					actor: npc.okru,
 					layer: 'door',
 					x: 660,
 					y: 460
 				},
 				{
-					actor: strazu,
+					actor: npc.strazu,
 					layer: 'door',
 					x: 980,
 					y: 460
@@ -393,12 +398,23 @@ export class App {
 			this.player.walkTo(e.clientX / window.innerWidth * 1920 - 60, 100);
 		};
 
-		engineer.idle(0);
-		seller.idle(0);
-		okru.idle(0);
-		strazu.idle(0);
-		conductor.idle(0);
-		conductor.sprite.div.style.transform = 'scaleX(-1)';
+		for(let id of Object.keys(npc)) {
+			const actor = npc[id];
+
+			if(actor.spec.script) {
+				actor.sprite.div.onclick = (e: MouseEvent) => this.player.talkTo(actor, e);
+				actor.spec.script.actor = actor;
+			}
+
+			actor.idle(0);
+		}
+
+		document.getElementById('dialog-modal')!.onclick = (e: MouseEvent) => {
+			e.stopPropagation();
+			e.preventDefault();
+		};
+
+		npc.conductor.sprite.div.style.transform = 'scaleX(-1)';
 	}
 
 	ui: UI;
