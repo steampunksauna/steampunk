@@ -91,12 +91,12 @@ export class Actor {
 
 		this.sprite.div.style.transform = 'scaleX(' + (sign > 0 ? -1 : 1) + ')';
 
-		audiomanager.loop('footstep_left');
+		audiomanager.loopFoot('footstep_left');
 		let rightFootstep = false;
 		while(this.animId <= animId && (toX - x) * sign > 0) {
 			if (frame > 20 && !rightFootstep) {
 				rightFootstep = true;
-				audiomanager.loop('footstep_right');
+				audiomanager.loopFoot('footstep_right');
 			}
 			this.sprite.div.style.width = ~~(this.sprite.width * document.body.clientWidth / 1920) + 'px';
 			await Promise.delay(33);
@@ -105,7 +105,7 @@ export class Actor {
 			x += sign * 12;
 			++frame;
 		}
-		audiomanager.clearLoops();
+		audiomanager.clearLoopsFoot();
 
 		if(this.animId <= animId) {
 			this.sprite.setFrame(0);

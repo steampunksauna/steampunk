@@ -4,12 +4,14 @@ export class AudioManager {
   sounds: {[id: string]: HTMLAudioElement};
   soundFiles: {[id: string]: string};
   activeLoops: HTMLAudioElement[];
+  activeLoopsFoot: HTMLAudioElement[];
 
   constructor() {
     this.audioContainer = document.getElementById('audio') as HTMLDivElement;
     this.sounds = {};
     this.soundFiles = {};
     this.activeLoops = [];
+    this.activeLoopsFoot = [];
   }
 
   createAudio(id: string, file: string) {
@@ -56,6 +58,25 @@ export class AudioManager {
       this.createAudio(sound.id, this.soundFiles[sound.id]);
     });
     this.activeLoops = [];
+  }
+
+  loopFoot(id: string) {
+    if (this.sounds[id]) {
+      let sound = this.sounds[id];
+      sound.loop = true;
+      sound.play();
+      this.activeLoopsFoot.push(sound);
+    }
+  }
+
+  clearLoopsFoot() {
+    this.activeLoopsFoot.forEach((sound) => {
+      sound.loop = false;
+      sound.pause();
+      this.removeAudio(sound.id);
+      this.createAudio(sound.id, this.soundFiles[sound.id]);
+    });
+    this.activeLoopsFoot = [];
   }
 
 }
