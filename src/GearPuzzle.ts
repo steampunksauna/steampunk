@@ -8,19 +8,19 @@ export class GearPuzzle {
 	moving = false;
 
 	constructor() {
+		let smallOffset = 56;
+		let bigOffset = 102;
 		this.gears = [
-			new Gear('hourhand', 389, 798, 2, 2, this, undefined, 'clockhands'),
-			new Gear('minutehand', 389, 798, 1, 1, this, undefined, 'clockhands'),
-			new Gear('gear_small', 100, 100, 56, 56, this, [0, 30, 60, 90]),
-			new Gear('gear_big', 155, 165, 102, 102, this),
-			new Gear('gear_small_arm', 300, 100, 56, 56, this),
-			new Gear('gear_big', 355, 565, 102, 102, this),
+			new Gear('hourhand', 389, 798, 2, 2, this, undefined, 0, 'clockhands'),
+			new Gear('minutehand', 389, 798, 1, 1, this, undefined, 0, 'clockhands'),
+			new Gear('gear_small', 325, 575, smallOffset, smallOffset, this),
+			new Gear('gear_small', 480, 730, smallOffset, smallOffset, this),
+			new Gear('gear_small_arm', 280, 160, smallOffset, smallOffset, this, [0, 30, 60, 90, 120], -60),
 		];
-		this.gears[2].connect(this.gears[3], 0.5, true, false);
-		this.gears[3].connect(this.gears[4], 2, false);
-		this.gears[2].connect(this.gears[0], 1, true, true);
-		this.gears[2].connect(this.gears[1], 1, true, false);
-		this.gears[5].connect(this.gears[1], 1, true, false);
+		this.gears[0].connect(this.gears[2], 2, true, false);
+		this.gears[1].connect(this.gears[3], 2, true, false);
+		this.gears[4].connect(this.gears[2], 1, true, false);
+		this.gears[4].connect(this.gears[3], 1, true, false);
 	}
 
 	getGears() {
