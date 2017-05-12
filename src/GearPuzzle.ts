@@ -20,16 +20,16 @@ export class GearPuzzle {
 		this.gears[0].connect(this.gears[4], 1, true, false);
 	}
 
-  getGears() {
-    return this.gears;
-  }
+	getGears() {
+		return this.gears;
+	}
 
-  getCasts() {
-    let result: Cast[];
-    result = [];
-    this.gears.forEach(function (element) {
-      result.push(element.getCast());
-    });
-    return result;
-  }
+	getCasts() {
+		let result: Cast[];
+		result = [];
+		this.gears.forEach(function (element) {
+			result.push(element.getCast());
+		});
+		return result;
+	}
 }
