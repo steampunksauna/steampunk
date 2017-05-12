@@ -36,6 +36,7 @@ export const script: Script = {
 	},
 	init7: {
 		text: "<i>You received 20 Kopeck from Mirka.</i>",
+		event: () => { state.money += 20; },
 		'OK': 'end'
 	},
 	idle1: {

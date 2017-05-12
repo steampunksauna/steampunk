@@ -44,23 +44,33 @@ export class Dialog {
 			spec = this.script[state];
 		}
 
+		if(spec.event) (spec.event as any)();
 		this.state = state;
 
-		this.content.innerHTML = '<b>' + (this.script.actor as any as Actor).spec.name!.toUpperCase() + '</b><br>' + spec.text;
+		this.content.innerHTML = '<b>' + (spec.name || (this.script.actor as any as Actor).spec.name)!.toUpperCase() + '</b><br>' + spec.text;
 
 		for(let node of Array.prototype.slice.call(this.modal.children)) {
 			this.modal.removeChild(node);
 		}
 
-		let i = 0;
+		let buttonCount = 0;
 
 		for(let action of Object.keys(spec)) {
-			if(action != 'text') {
-				this.addButton(action);
+			if(action != 'text' && action != 'event' && action != 'name') {
+				++buttonCount;
 			}
 		}
 
-		++i;
+		let i = 0;
+
+		for(let action of Object.keys(spec)) {
+			if(action != 'text' && action != 'event' && action != 'name') {
+				const button = this.addButton(action);
+				// button.div.style.left = (22 + (70 - 22) * i / buttonCount) + '%';
+			}
+
+			++i;
+		}
 	}
 
 	addButton(action: string) {
@@ -80,6 +90,8 @@ export class Dialog {
 		};
 
 		this.modal.appendChild(sprite.div);
+
+		return(sprite);
 	}
 
 /*

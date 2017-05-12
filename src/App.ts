@@ -7,6 +7,7 @@ import { GearPuzzle } from './GearPuzzle';
 import { script as sellerScript } from './actor/Seller';
 import { script as engineerScript } from './actor/Engineer';
 import { script as conductorScript } from './actor/Conductor';
+import { script as guardScript } from './actor/Guard';
 import { audiomanager } from './AudioManager';
 
 const portalWidth = 320;
@@ -51,12 +52,14 @@ export class App {
 			}),
 			okru: new Actor({
 				id: 'okru',
+				script: guardScript,
 				sheetUrl: 'assets/guard2.png',
 				sheetFrames: 12,
 				firstFrame: 0
 			}),
 			strazu: new Actor({
 				id: 'strazu',
+				script: guardScript,
 				sheetUrl: 'assets/guard2.png',
 				sheetFrames: 12,
 				firstFrame: 0
