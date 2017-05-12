@@ -10,11 +10,12 @@ export class Dialog {
 
 	constructor(script: Script) {
 		this.script = script;
-		this.sheet = new SpriteSheet('assets/dialog.png', 1);
+		this.sheetDialog = new SpriteSheet('assets/dialog.png', 1);
+		this.sheetButton = new SpriteSheet('assets/button.png', 1);
 
 		const sprite = new Sprite();
 		sprite.div.classList.add('dialog');
-		sprite.setSheet(this.sheet);
+		sprite.setSheet(this.sheetDialog);
 		sprite.setFrame(0);
 
 		const content = document.createElement('div');
@@ -23,25 +24,62 @@ export class Dialog {
 
 		this.sprite = sprite;
 		this.content = content;
+		this.modal = document.getElementById('dialog-modal') as HTMLDivElement;
 
-		document.getElementById('dialog-modal')!.style.display = 'block';
+		this.modal.style.display = 'block';
 
 		this.setState('init');
 	}
 
 	setState(state: string) {
+		if(state == 'end') {
+			this.sprite.div.parentNode!.removeChild(this.sprite.div);
+			this.modal.style.display = 'none';
+			return;
+		}
 		let spec = this.script[state];
 
 		while(typeof(spec) == 'function') {
-			spec = this.script[spec()];
+			state = spec();
+			spec = this.script[state];
 		}
 
 		this.state = state;
 
-		console.log(state);
-		console.log(spec);
-
 		this.content.innerHTML = '<b>' + (this.script.actor as any as Actor).spec.name!.toUpperCase() + '</b><br>' + spec.text;
+
+		for(let node of Array.prototype.slice.call(this.modal.children)) {
+			this.modal.removeChild(node);
+		}
+
+		let i = 0;
+
+		for(let action of Object.keys(spec)) {
+			if(action != 'text') {
+				this.addButton(action);
+			}
+		}
+
+		++i;
+	}
+
+	addButton(action: string) {
+		const sprite = new Sprite();
+		sprite.div.classList.add('dialog-button');
+		sprite.setSheet(this.sheetButton);
+		sprite.setFrame(0);
+
+		const content = document.createElement('div');
+		content.classList.add('dialog-button-content');
+
+		content.innerHTML = action;
+
+		sprite.div.appendChild(content);
+		sprite.div.onclick = (e: MouseEvent) => {
+			this.setState(this.script[this.state][action]);
+		};
+
+		this.modal.appendChild(sprite.div);
 	}
 
 /*
@@ -52,8 +90,10 @@ export class Dialog {
 
 	script: Script;
 	state: string;
-	sheet: SpriteSheet;
+	sheetDialog: SpriteSheet;
+	sheetButton: SpriteSheet;
 	sprite: Sprite;
 	content: HTMLDivElement;
+	modal: HTMLDivElement;
 
 }

@@ -2,7 +2,14 @@ import { Script } from '../Dialog';
 import { state } from '../State';
 
 export const script: Script = {
-	init: () => 'init1',
+	init: () => {
+		if(state.talkedToMirka) {
+			return(Math.random() < 0.5 ? 'idle1' : 'idle2');
+		} else {
+			state.talkedToMirka = true;
+			return('init1');
+		}
+	},
 	init1: {
 		text: "Lunch! Thank- oh. You're not here with my lunch.",
 		'...': 'init2'
@@ -29,6 +36,18 @@ export const script: Script = {
 	},
 	init7: {
 		text: "<i>You received 20 Kopeck from Mirka.</i>",
+		'OK': 'end'
+	},
+	idle1: {
+		text: "Please- please let me out of here... Sorry, don’t mind me.",
+		'OK': 'end'
+	},
+	idle2: {
+		text: "I'm so bored. There isn’t even anything for me to watch here.",
+		'OK': 'idle3'
+	},
+	idle3: {
+		text: "Well, besides that weird machine, but no one knows how to use it.",
 		'OK': 'end'
 	}
 }
